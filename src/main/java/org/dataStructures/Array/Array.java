@@ -1,63 +1,105 @@
 package org.dataStructures.Array;
 
-public class Array<T> implements ArrayList<T>{
-    @Override
-    public int size() {
-        //TODO Implement method
-        return 0;
+public class Array<T>{
+
+    private final Integer DEFAULT_CAPACITY = 16;
+
+    private Integer size;
+    public Integer capacity;
+
+    private Object[] arr;
+
+    public Array() {
+        this.arr = new Object[DEFAULT_CAPACITY];
+        this.capacity = DEFAULT_CAPACITY;
+        this.size = 0;
     }
 
-    @Override
-    public int capacity() {
-        //TODO Implement method
-        return 0;
+    public Integer size() {
+        return this.size;
     }
 
-    @Override
     public Boolean isEmpty() {
-        //TODO Implement method
-        return null;
+        return this.size == 0;
     }
 
-    @Override
-    public T valueAt(Integer index) {
-        //TODO Implement method
-        return null;
+    public Object valueAt(Integer index) {
+        if (index > this.size - 1) {
+            throw new IndexOutOfBoundsException("Invalid Index");
+        }
+        return this.arr[index];
     }
 
-    @Override
     public void push(T data) {
-        //TODO Implement method
+        this.arr[this.size] = data;
+        this.size++;
+        if (this.capacity / 2 <= this.size) {
+            this.resize(this.capacity * 2);
+        }
     }
 
-    @Override
     public void insert(Integer index, T data) {
-        //TODO Implement method
+        int start = index;
+        int end = this.size;
+
+        for (int i = end - 1; i >= start; i--) {
+            this.arr[i + 1] = this.arr[i];
+        }
+        arr[index] = data;
+        this.size++;
+        if (this.capacity / 2 <= this.size) {
+            this.resize(this.capacity * 2);
+        }
     }
 
-    @Override
-    public T pop() {
-        //TODO Implement method
-        return null;
+    public void pop() {
+        this.arr[this.size - 1] = null;
+        this.size--;
+
+        if (this.capacity / 4 > this.size) {
+            this.resize(this.size * 2);
+        }
     }
 
-    @Override
     public void delete(Integer index) {
-        //TODO Implement method
+        int start = index;
+        int end = this.size;
+
+        for (int i = start; i < end; i++) {
+            this.arr[i] = this.arr[i + 1];
+            this.arr[i + 1] = null;
+        }
+        this.size--;
+        if (this.capacity / 4 > this.size) {
+            this.resize(this.size * 2);
+        }
     }
 
-    @Override
-    public void remove(T data) {
-        //TODO Implement method
+    public void remove(T data) throws Exception {
+        int indexToRemove = indexOf(data);
+        delete(indexToRemove);
     }
 
-    @Override
-    public T indexOf(T data) {
-        //TODO Implement method
-        return null;
+    public int indexOf(T data) throws Exception {
+        int count = 0;
+
+        while (count < this.size) {
+            if (arr[count].equals(data)) {
+                return count;
+            }
+            count++;
+        }
+        throw new Exception("Not found!");
     }
 
     private void resize(Integer newCapacity) {
-        //TODO Implement method
+        this.capacity = newCapacity;
+        Object[] oldArr = this.arr;
+        this.arr = new Object[newCapacity];
+
+        for (int i = 0; i < this.size; i++) {
+            this.arr[i] = oldArr[i];
+        }
+        oldArr = null;
     }
 }
