@@ -1,22 +1,19 @@
 package org.dataStructures.linkedList;
 
-public class LinkedList<T> implements List<T>{
+public class LinkedList<T> {
 
     private Node<T> head;
     private Node<T> tail;
     private Integer size = 0;
 
-    @Override
     public Integer size() {
         return this.size;
     }
 
-    @Override
     public Boolean empty() {
         return this.size <= 0;
     }
 
-    @Override
     public T valueAt(Integer index) {
         Node<T> auxNode = this.head;
         if (index >= this.size) {
@@ -28,7 +25,6 @@ public class LinkedList<T> implements List<T>{
         return auxNode.getData();
     }
 
-    @Override
     public void pushFront(T data) {
         Node<T> newNode = new Node<T>(data);
         if (this.head != null) {
@@ -41,7 +37,6 @@ public class LinkedList<T> implements List<T>{
         this.size++;
     }
 
-    @Override
     public void pushBack(T data) {
         Node<T> newNode = new Node<T>(data);
         if (this.head != null) { // In case list isn't empty
@@ -54,13 +49,11 @@ public class LinkedList<T> implements List<T>{
         this.size++;
     }
 
-    @Override
     public void popFront() {
         this.head = this.head.getNext();
         this.size--;
     }
 
-    @Override
     public void popBack() {
         if (this.size == 1) { // True means that there's only one element. So it'll set null for both head and tail.
             this.head = null;
@@ -77,19 +70,16 @@ public class LinkedList<T> implements List<T>{
         }
     }
 
-    @Override
     public T front() {
         if (!this.empty()) return this.head.getData();
         return null;
     }
 
-    @Override
     public T back() {
         if (!this.empty()) return this.tail.getData();
         return null;
     }
 
-    @Override
     public void set(T data, Integer index) {
         if (index >= this.size || index < 0) {
             throw new IndexOutOfBoundsException("index must be minor than list size.");
@@ -116,7 +106,6 @@ public class LinkedList<T> implements List<T>{
         }
     }
 
-    @Override
     public void erase(Integer index) {
         if (index >= this.size || index < 0) {
             throw new IndexOutOfBoundsException("index must be minor than list size.");
@@ -143,7 +132,6 @@ public class LinkedList<T> implements List<T>{
         this.size--;
     }
 
-    @Override
     public void reverse() {
         Node<T> prev = null;
         Node<T> act = this.head;
@@ -157,8 +145,6 @@ public class LinkedList<T> implements List<T>{
         }
         this.head = prev;
     }
-
-    @Override
     public void removeValue(T data) {
     //TODO Implement method removeValue
     }
